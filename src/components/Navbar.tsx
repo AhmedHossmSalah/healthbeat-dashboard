@@ -63,9 +63,11 @@ const Navbar = () => {
 
           {/* Profile & Mobile Menu */}
           <div className="flex items-center gap-3">
-            <Button variant="outline" className="hidden md:flex gap-2">
-              <UserCircle className="h-5 w-5" />
-              الملف الشخصي
+            <Button variant="outline" className="hidden md:flex gap-2" asChild>
+              <Link to="/auth">
+                <UserCircle className="h-5 w-5" />
+                الملف الشخصي
+              </Link>
             </Button>
 
             {/* Mobile Menu Button */}
@@ -106,9 +108,11 @@ const Navbar = () => {
                   </Link>
                 </Button>
               ))}
-              <Button variant="outline" className="justify-end mt-2 gap-2">
-                <UserCircle className="h-5 w-5" />
-                الملف الشخصي
+              <Button variant="outline" className="justify-end mt-2 gap-2" asChild>
+                <Link to="/auth">
+                  <UserCircle className="h-5 w-5" />
+                  الملف الشخصي
+                </Link>
               </Button>
             </div>
           </motion.div>
