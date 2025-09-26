@@ -12,8 +12,8 @@ const Navbar = () => {
     { name: "الرئيسية", path: "/" },
     { name: "الأطباء", path: "/doctors" },
     { name: "معامل التحاليل", path: "/labs" },
-    { name: "اتصل بنا", path: "/contact" },
     { name: "المدارس والتأمين", path: "/schools-insurance" },
+    { name: "اتصل بنا", path: "/contact" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
