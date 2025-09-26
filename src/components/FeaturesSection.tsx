@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Heart, Users, FlaskConical, MessageSquare, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import doctorIcon from "@/assets/doctor-icon.png";
 import labIcon from "@/assets/lab-icon.png";
@@ -32,14 +32,6 @@ const FeaturesSection = () => {
       color: "accent",
       link: "/labs",
       buttonText: "ابحث عن معمل"
-    },
-    {
-      icon: MessageSquare,
-      title: "الاستشارات الفورية",
-      description: "احصل على استشارة طبية فورية من خلال نظام الدردشة المتقدم",
-      color: "medical-blue",
-      link: "/consultations",
-      buttonText: "ابدأ الاستشارة"
     }
   ];
 
@@ -93,7 +85,7 @@ const FeaturesSection = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+          className="grid grid-cols-1 md:grid-cols-3 gap-8"
         >
           {features.map((feature, index) => (
             <motion.div
@@ -111,17 +103,11 @@ const FeaturesSection = () => {
                     transition={{ duration: 0.3 }}
                     className="mb-6"
                   >
-                    {typeof feature.icon === 'string' ? (
-                      <img 
-                        src={feature.icon} 
-                        alt={feature.title}
-                        className="w-16 h-16 mx-auto"
-                      />
-                    ) : (
-                      <div className={`w-16 h-16 mx-auto bg-${feature.color} rounded-full flex items-center justify-center`}>
-                        <feature.icon className="h-8 w-8 text-white" />
-                      </div>
-                    )}
+                    <img 
+                      src={feature.icon} 
+                      alt={feature.title}
+                      className="w-16 h-16 mx-auto"
+                    />
                   </motion.div>
 
                   <h3 className="text-xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors">
