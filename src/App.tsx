@@ -4,14 +4,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import Index from "./pages/Index";
 import Doctors from "./pages/Doctors";
 import RiskAssessment from "./pages/RiskAssessment";
-import AssessmentsIndex from "./pages/AssessmentsIndex";
-import DiabetesAssessment from "./pages/assessments/DiabetesAssessment";
-import HypertensionAssessment from "./pages/assessments/HypertensionAssessment";
-import HeartAssessment from "./pages/assessments/HeartAssessment";
 import Contact from "./pages/Contact";
 import Auth from "./pages/Auth";
 import Labs from "./pages/Labs";
@@ -29,29 +24,22 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <div className="min-h-screen flex flex-col">
+        <div className="min-h-screen">
           <Navbar />
-          <main id="main" className="flex-grow">
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/doctors" element={<Doctors />} />
-              <Route path="/risk-assessment" element={<RiskAssessment />} />
-              <Route path="/assessments" element={<AssessmentsIndex />} />
-              <Route path="/assessments/diabetes" element={<DiabetesAssessment />} />
-              <Route path="/assessments/hypertension" element={<HypertensionAssessment />} />
-              <Route path="/assessments/heart" element={<HeartAssessment />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/auth" element={<Auth />} />
-              <Route path="/labs" element={<Labs />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/terms" element={<Terms />} />
-              <Route path="/privacy" element={<Privacy />} />
-              <Route path="/schools-insurance" element={<SchoolsInsurance />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </main>
-          <Footer data-test="site-footer" />
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/doctors" element={<Doctors />} />
+            <Route path="/risk-assessment" element={<RiskAssessment />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/labs" element={<Labs />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/schools-insurance" element={<SchoolsInsurance />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
         </div>
       </BrowserRouter>
     </TooltipProvider>
