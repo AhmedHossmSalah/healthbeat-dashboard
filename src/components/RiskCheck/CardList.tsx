@@ -1,15 +1,16 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import RiskCard from "./RiskCard";
 import { RiskSection } from "./RiskCheckPage";
 import { translations } from "./translations/ar";
 import { TrendingUp, Heart, Activity } from "lucide-react";
 
 interface CardListProps {
-  onSectionOpen: (section: RiskSection) => void;
   progress: Record<RiskSection, number>;
 }
 
-const CardList = ({ onSectionOpen, progress }: CardListProps) => {
+const CardList = ({ progress }: CardListProps) => {
+  const navigate = useNavigate();
   const cards = [
     {
       id: "diabetes" as RiskSection,
@@ -48,7 +49,7 @@ const CardList = ({ onSectionOpen, progress }: CardListProps) => {
         {translations.ui.chooseAssessment}
       </motion.h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
         {cards.map((card, index) => (
           <motion.div
             key={card.id}
@@ -59,7 +60,7 @@ const CardList = ({ onSectionOpen, progress }: CardListProps) => {
             <RiskCard
               {...card}
               progress={progress[card.id]}
-              onStart={() => onSectionOpen(card.id)}
+              onStart={() => navigate(`/risk-assessment/${card.id}`)}
             />
           </motion.div>
         ))}

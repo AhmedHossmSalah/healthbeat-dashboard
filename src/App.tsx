@@ -7,6 +7,9 @@ import Navbar from "./components/Navbar";
 import Index from "./pages/Index";
 import Doctors from "./pages/Doctors";
 import RiskAssessment from "./pages/RiskAssessment";
+import DiabetesAssessment from "./pages/DiabetesAssessment";
+import HypertensionAssessment from "./pages/HypertensionAssessment";
+import HeartAssessment from "./pages/HeartAssessment";
 import Contact from "./pages/Contact";
 import Auth from "./pages/Auth";
 import Labs from "./pages/Labs";
@@ -30,6 +33,9 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/doctors" element={<Doctors />} />
             <Route path="/risk-assessment" element={<RiskAssessment />} />
+            <Route path="/risk-assessment/diabetes" element={<DiabetesAssessment />} />
+            <Route path="/risk-assessment/hypertension" element={<HypertensionAssessment />} />
+            <Route path="/risk-assessment/heart" element={<HeartAssessment />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/labs" element={<Labs />} />

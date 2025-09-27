@@ -4,17 +4,15 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
-import CardList from "./CardList";
-import { translations } from "./translations/ar";
+import SectionDrawer from "@/components/RiskCheck/SectionDrawer";
+import { translations } from "@/components/RiskCheck/translations/ar";
 
-export type RiskSection = "diabetes" | "hypertension" | "heart";
+const HeartAssessment = () => {
+  const [progress, setProgress] = useState(0);
 
-const RiskCheckPage = () => {
-  const [progress, setProgress] = useState<Record<RiskSection, number>>({
-    diabetes: 0,
-    hypertension: 0,
-    heart: 0
-  });
+  const handleProgressUpdate = (progressValue: number) => {
+    setProgress(progressValue);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-card" dir="rtl">
@@ -27,44 +25,36 @@ const RiskCheckPage = () => {
             transition={{ duration: 0.8 }}
           >
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              {translations.page.title}
+              {translations.sections.heart.title}
             </h1>
             <p className="text-xl text-white/90 max-w-3xl mx-auto">
-              {translations.page.subtitle}
+              {translations.sections.heart.description}
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Introduction */}
-      <section className="py-12">
+      {/* Progress Bar */}
+      <section className="py-4 bg-card border-b">
         <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="max-w-4xl mx-auto"
-          >
-            <Card className="shadow-card mb-8">
-              <CardContent className="p-8">
-                <h2 className="text-2xl font-bold text-foreground mb-4">
-                  {translations.intro.whatIs.title}
-                </h2>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  {translations.intro.whatIs.description}
-                </p>
-                <h3 className="text-xl font-semibold text-foreground mb-3">
-                  {translations.intro.howItWorks.title}
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {translations.intro.howItWorks.description}
-                </p>
-              </CardContent>
-            </Card>
-          </motion.div>
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-between text-sm text-muted-foreground">
+              <span>
+                {translations.sections.heart.title} - 
+                {translations.ui.progressText} {progress}%
+              </span>
+              <div className="w-48 bg-muted rounded-full h-2">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progress}%` }}
+                  transition={{ duration: 0.5 }}
+                  className="bg-primary h-2 rounded-full"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
-
 
       {/* Main Content */}
       <section className="py-12">
@@ -75,18 +65,23 @@ const RiskCheckPage = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="max-w-6xl mx-auto"
           >
-            <CardList progress={progress} />
+            <SectionDrawer
+              section="heart"
+              onClose={() => {}}
+              onProgressUpdate={(_, progressValue) => handleProgressUpdate(progressValue)}
+              currentProgress={progress}
+            />
           </motion.div>
         </div>
       </section>
 
-      {/* Back to Home */}
+      {/* Back to Risk Assessment */}
       <section className="py-8">
         <div className="container mx-auto px-4 text-center">
           <Button asChild variant="outline" className="gap-2">
-            <Link to="/">
+            <Link to="/risk-assessment">
               <ArrowLeft className="h-4 w-4" />
-              {translations.ui.backToHome}
+              {translations.ui.backToAssessment}
             </Link>
           </Button>
         </div>
@@ -95,4 +90,4 @@ const RiskCheckPage = () => {
   );
 };
 
-export default RiskCheckPage;
+export default HeartAssessment;
