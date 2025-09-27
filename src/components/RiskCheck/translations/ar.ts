@@ -210,7 +210,6 @@ export const translations = {
     "progressText": "التقدم",
     "chooseAssessment": "اختر نوع التقييم المطلوب",
     "backToHome": "العودة للرئيسية",
-    "backToAssessment": "العودة لفحص المخاطر",
     "bookDoctor": "احجز مع دكتور",
     "newAssessment": "تقييم جديد",
     "downloadReport": "تحميل التقرير",

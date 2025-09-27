@@ -5,16 +5,30 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import CardList from "./CardList";
+import SectionDrawer from "./SectionDrawer";
 import { translations } from "./translations/ar";
 
 export type RiskSection = "diabetes" | "hypertension" | "heart";
 
 const RiskCheckPage = () => {
+  const [activeSection, setActiveSection] = useState<RiskSection | null>(null);
   const [progress, setProgress] = useState<Record<RiskSection, number>>({
     diabetes: 0,
     hypertension: 0,
     heart: 0
   });
+
+  const handleSectionOpen = (section: RiskSection) => {
+    setActiveSection(section);
+  };
+
+  const handleSectionClose = () => {
+    setActiveSection(null);
+  };
+
+  const handleProgressUpdate = (section: RiskSection, progressValue: number) => {
+    setProgress(prev => ({ ...prev, [section]: progressValue }));
+  };
 
   return (
     <div className="min-h-screen bg-gradient-card" dir="rtl">
@@ -65,6 +79,29 @@ const RiskCheckPage = () => {
         </div>
       </section>
 
+      {/* Progress Bar - Only visible when a section is active */}
+      {activeSection && (
+        <section className="py-4 bg-card border-b">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <div className="flex items-center justify-between text-sm text-muted-foreground">
+                <span>
+                  {translations.sections[activeSection].title} - 
+                  {translations.ui.progressText} {progress[activeSection]}%
+                </span>
+                <div className="w-48 bg-muted rounded-full h-2">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${progress[activeSection]}%` }}
+                    transition={{ duration: 0.5 }}
+                    className="bg-primary h-2 rounded-full"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Main Content */}
       <section className="py-12">
@@ -75,22 +112,33 @@ const RiskCheckPage = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="max-w-6xl mx-auto"
           >
-            <CardList progress={progress} />
+            {!activeSection ? (
+              <CardList onSectionOpen={handleSectionOpen} progress={progress} />
+            ) : (
+              <SectionDrawer
+                section={activeSection}
+                onClose={handleSectionClose}
+                onProgressUpdate={handleProgressUpdate}
+                currentProgress={progress[activeSection]}
+              />
+            )}
           </motion.div>
         </div>
       </section>
 
-      {/* Back to Home */}
-      <section className="py-8">
-        <div className="container mx-auto px-4 text-center">
-          <Button asChild variant="outline" className="gap-2">
-            <Link to="/">
-              <ArrowLeft className="h-4 w-4" />
-              {translations.ui.backToHome}
-            </Link>
-          </Button>
-        </div>
-      </section>
+      {/* Back to Home - Only visible when no section is active */}
+      {!activeSection && (
+        <section className="py-8">
+          <div className="container mx-auto px-4 text-center">
+            <Button asChild variant="outline" className="gap-2">
+              <Link to="/">
+                <ArrowLeft className="h-4 w-4" />
+                {translations.ui.backToHome}
+              </Link>
+            </Button>
+          </div>
+        </section>
+      )}
     </div>
   );
 };

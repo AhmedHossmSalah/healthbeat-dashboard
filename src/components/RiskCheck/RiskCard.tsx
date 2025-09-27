@@ -33,7 +33,7 @@ const RiskCard = ({
       whileTap={{ scale: 0.98 }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
     >
-      <Card className="h-full min-h-[320px] flex flex-col shadow-card hover:shadow-hover transition-all duration-300 cursor-pointer group">
+      <Card className="h-full shadow-card hover:shadow-hover transition-all duration-300 cursor-pointer group">
         <CardHeader className="text-center pb-4">
           <div className={`w-16 h-16 mx-auto rounded-full ${bgColor} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
             <Icon className={`h-8 w-8 ${color}`} />
@@ -43,8 +43,8 @@ const RiskCard = ({
           </CardTitle>
         </CardHeader>
         
-        <CardContent className="flex-1 flex flex-col justify-between space-y-4">
-          <p className="text-muted-foreground leading-relaxed text-center flex-1 flex items-center justify-center min-h-[60px]">
+        <CardContent className="space-y-4">
+          <p className="text-muted-foreground leading-relaxed text-center">
             {description}
           </p>
           
