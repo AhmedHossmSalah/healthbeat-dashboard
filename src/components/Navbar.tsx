@@ -9,11 +9,12 @@ const Navbar = () => {
   const location = useLocation();
 
   const menuItems = [
-    { name: "الرئيسية", path: "/" },
-    { name: "الأطباء", path: "/doctors" },
-    { name: "معامل التحاليل", path: "/labs" },
-    { name: "المدارس والتأمين", path: "/schools-insurance" },
-    { name: "اتصل بنا", path: "/contact" },
+    { name: "الرئيسية", path: "/", slug: "home" },
+    { name: "الفحوصات", path: "/assessments", slug: "assessments" },
+    { name: "الأطباء", path: "/doctors", slug: "doctors" },
+    { name: "معامل التحاليل", path: "/labs", slug: "labs" },
+    { name: "المدارس والتأمين", path: "/schools-insurance", slug: "schools-insurance" },
+    { name: "اتصل بنا", path: "/contact", slug: "contact" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -42,22 +43,27 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-2">
+          <div className="hidden md:flex items-center gap-1">
+            <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-primary-foreground px-4 py-2 rounded z-50">
+              تخطي إلى المحتوى
+            </a>
             {menuItems.map((item) => (
-              <Button
+              <Link
                 key={item.path}
-                variant={isActive(item.path) ? "default" : "ghost"}
-                asChild
-                className={`${
+                to={item.path}
+                className={`nav-item group inline-flex items-center px-3 py-2 rounded-md font-semibold transition-all duration-150 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
                   isActive(item.path)
                     ? "bg-primary text-primary-foreground shadow-medical"
-                    : "hover:bg-medical-light-blue"
-                } transition-all duration-300`}
+                    : "text-foreground hover:text-primary hover:bg-primary/5"
+                }`}
+                data-test={`nav-item-${item.slug}`}
+                aria-current={isActive(item.path) ? "page" : undefined}
               >
-                <Link to={item.path} className="font-medium">
-                  {item.name}
-                </Link>
-              </Button>
+                <span className={`nav-indicator ml-2 w-0 h-full bg-gradient-to-b from-primary to-accent rounded transition-all duration-200 ${
+                  isActive(item.path) ? "w-1" : "group-hover:w-1"
+                }`} />
+                {item.name}
+              </Link>
             ))}
           </div>
 
@@ -76,6 +82,9 @@ const Navbar = () => {
               size="icon"
               className="md:hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu"
+              aria-label={isMenuOpen ? "إغلاق القائمة" : "فتح القائمة"}
             >
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
@@ -85,6 +94,7 @@ const Navbar = () => {
         {/* Mobile Menu */}
         {isMenuOpen && (
           <motion.div
+            id="mobile-menu"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
@@ -92,21 +102,23 @@ const Navbar = () => {
           >
             <div className="flex flex-col gap-2 pt-4">
               {menuItems.map((item) => (
-                <Button
+                <Link
                   key={item.path}
-                  variant={isActive(item.path) ? "default" : "ghost"}
-                  asChild
-                  className={`justify-end ${
+                  to={item.path}
+                  className={`nav-item group inline-flex items-center justify-end px-3 py-2 rounded-md font-semibold transition-all duration-150 ${
                     isActive(item.path)
                       ? "bg-primary text-primary-foreground"
-                      : "hover:bg-medical-light-blue"
+                      : "text-foreground hover:text-primary hover:bg-primary/5"
                   }`}
+                  data-test={`nav-item-${item.slug}`}
+                  aria-current={isActive(item.path) ? "page" : undefined}
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  <Link to={item.path} className="w-full text-right">
-                    {item.name}
-                  </Link>
-                </Button>
+                  <span className={`nav-indicator mr-2 w-0 h-full bg-gradient-to-b from-primary to-accent rounded transition-all duration-200 ${
+                    isActive(item.path) ? "w-1" : "group-hover:w-1"
+                  }`} />
+                  {item.name}
+                </Link>
               ))}
               <Button variant="outline" className="justify-end mt-2 gap-2" asChild>
                 <Link to="/auth">
