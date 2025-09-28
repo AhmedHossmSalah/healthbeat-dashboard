@@ -1,0 +1,162 @@
+### HealthBeat API Test Collection
+
+### Variables
+@baseUrl = http://127.0.0.1:8000
+@token = {{auth_token}}
+
+### Health Check
+GET {{baseUrl}}/health
+
+### Get Assessment Types
+GET {{baseUrl}}/assessments
+
+### Register User
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "TestPass123!",
+  "full_name": "Test User"
+}
+
+### Login User
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "TestPass123!"
+}
+
+### Get Current User Profile
+GET {{baseUrl}}/auth/me
+Authorization: Bearer {{token}}
+
+### Update User Profile
+PUT {{baseUrl}}/auth/me
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "full_name": "Updated Test User",
+  "sex": "M",
+  "birth_date": "1990-01-01"
+}
+
+### Save Draft (Anonymous)
+POST {{baseUrl}}/drafts/
+Content-Type: application/json
+
+{
+  "assessment_type_id": "diabetes",
+  "session_id": "test-session-123",
+  "data": {
+    "age": 45,
+    "weight": 80,
+    "height": 175
+  }
+}
+
+### Get Draft (Anonymous)
+GET {{baseUrl}}/drafts/?assessment_type_id=diabetes&session_id=test-session-123
+
+### Submit Diabetes Assessment
+# @name submit_diabetes
+POST {{baseUrl}}/submissions/
+Content-Type: application/json
+
+{
+  "assessment_type_id": "diabetes",
+  "session_id": "test-diabetes-submission",
+  "data": {
+    "age": 55,
+    "weight": 85,
+    "height": 170,
+    "fastingGlucose": "110",
+    "hba1c": "6.0",
+    "familyHistory": "نعم",
+    "exercise": "نادراً",
+    "smoking": "لا",
+    "diet": "عادي"
+  }
+}
+
+### Submit Hypertension Assessment
+# @name submit_hypertension
+POST {{baseUrl}}/submissions/
+Content-Type: application/json
+
+{
+  "assessment_type_id": "hypertension",
+  "session_id": "test-bp-submission",
+  "data": {
+    "age": 60,
+    "weight": 90,
+    "height": 175,
+    "bpReadings": [
+      {"systolic": "150", "diastolic": "95"},
+      {"systolic": "145", "diastolic": "90"}
+    ],
+    "salt": "كثير",
+    "exercise": "لا أمارس",
+    "familyHistory": "نعم",
+    "smoking": "لا"
+  }
+}
+
+### Submit Heart Assessment
+# @name submit_heart
+POST {{baseUrl}}/submissions/
+Content-Type: application/json
+
+{
+  "assessment_type_id": "heart",
+  "session_id": "test-heart-submission",
+  "data": {
+    "age": 65,
+    "gender": "ذكر",
+    "weight": 95,
+    "height": 175,
+    "cholesterol": "250",
+    "ldl": "170",
+    "hdl": "35",
+    "smoking": "نعم",
+    "familyHistory": "نعم",
+    "exercise": "لا أمارس",
+    "diet": "غير صحي"
+  }
+}
+
+### Get Risk Assessment Details
+GET {{baseUrl}}/risks/{{risk_id}}
+
+### Get User Recommendations
+GET {{baseUrl}}/recommendations/
+Authorization: Bearer {{token}}
+
+### Track Analytics Event
+POST {{baseUrl}}/analytics/events
+Content-Type: application/json
+
+{
+  "session_id": "test-session-123",
+  "event_type": "assessment_start",
+  "payload": {
+    "assessment_type": "diabetes",
+    "page": "step1"
+  }
+}
+
+### Admin: Get Users List
+GET {{baseUrl}}/admin/users?page=1&per_page=10
+Authorization: Bearer {{admin_token}}
+
+### Admin: Get Assessment Metrics
+GET {{baseUrl}}/admin/assessments
+Authorization: Bearer {{admin_token}}
+
+### Get User Submissions
+GET {{baseUrl}}/submissions/?page=1&per_page=10
+Authorization: Bearer {{token}}
